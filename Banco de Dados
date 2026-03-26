@@ -1,0 +1,67 @@
+CREATE DATABASE SMIP_DBS;
+
+USE SMIP_DBS;
+
+CREATE TABLE maquinas (
+id_maquina INT PRIMARY KEY,
+nome_maquina TEXT(100),
+localizacao VARCHAR(100),
+data_instalacao DATE
+);
+
+
+CREATE TABLE sensores (
+id_sensor INT AUTO_INCREMENT PRIMARY KEY,
+id_maquina INT,
+tipo_sensor VARCHAR(50),
+unidade_medida VARCHAR(20),
+FOREIGN KEY (id_maquina)
+REFERENCES maquinas(id_maquina)
+);
+
+
+CREATE TABLE leituras (
+id_leitura INT AUTO_INCREMENT PRIMARY KEY,
+id_sensor INT,
+valor DECIMAL(10,2),
+data_leitura DATETIME,
+FOREIGN KEY (id_sensor)
+REFERENCES sensores(id_sensor)
+);
+
+
+CREATE TABLE alertas (
+id_alerta INT AUTO_INCREMENT PRIMARY KEY,
+id_leitura INT,
+nÍvel_alerta VARCHAR(20),
+mensagem TEXT,
+data_alerta DATETIME,
+FOREIGN KEY (id_leitura)
+REFERENCES leituras(id_leitura)
+);
+
+CREATE TABLE operador (
+id_operador INT PRIMARY KEY,
+nome VARCHAR(100),
+turno VARCHAR(20)
+);
+
+
+CREATE TABLE manutencoes (
+id_manutencoes INT AUTO_INCREMENT PRIMARY KEY,
+id_maquina INT,
+id_operador INT,
+descricao VARCHAR(200),
+data_manutencoes DATETIME,
+FOREIGN KEY (id_maquina)
+REFERENCES maquinas(id_maquina),
+FOREIGN KEY (id_operador)
+REFERENCES operador(id_operador)
+);
+
+
+INSERT INTO maquinas (id_leitura, localizacao, data_instalacao)
+VALUES
+(31, 2, 2026-03.26);
+USE smip_dbs;
+SELECT * FROM maquinas;
