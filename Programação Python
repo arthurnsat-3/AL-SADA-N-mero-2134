@@ -1,0 +1,39 @@
+import mysql.connector
+conexao = mysql.connector.connect()
+import mysql.connector
+conexao = mysql.connector.connect(
+    host = "localhost",
+    user = "root",
+    password = "root",
+    database = "SMIP_DBS"
+)
+print("Conectado com sucesso!")
+
+
+
+#CADASTRO
+nome = input("Digite o seu nome:")
+if nome == "Lucas":
+    print("Prossiga o seu login")
+else:
+    print("ATENÇÃO ALERTA DE INVASÃO")
+    exit() #ENCERRA O PROGRAMA
+
+#SENHA DE AUTORIZAÇÃO
+senha = int(input("Coloque a sua senha"))
+if senha == 15423:
+    print("Senha Correta")
+else:
+    print("Senha Incorreta, tente novamente")
+
+
+def menu():
+    print("\n==== SISTEMA DE MONITORAMENTO ====")
+    print("1 -Cadastrar Maquina")
+    print("2 -Cadastrar Sensor")
+    print("3 -Cadastrar Operador")
+    print("4 -Registrar Leituras")
+    print("5 -Listar Maquinas")
+    print("6 -Sair")
+menu()
+
