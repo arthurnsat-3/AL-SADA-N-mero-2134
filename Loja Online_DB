@@ -1,0 +1,35 @@
+CREATE DATABASE Loja_DB;
+USE Loja_DB;
+
+---Tabela Cliente---
+CREATE TABLE Cliente (
+id_cliente INT PRIMARY KEY IDENTITY(1,1),
+nome VARCHAR(100) NOT NULL,
+email VARCHAR(100) UNIQUE
+);
+
+---Tabela Produto---
+CREATE TABLE Produto (
+id_produto INT PRIMARY KEY IDENTITY(1,1),
+nome VARCHAR(100) NOT NULL,
+preco DECIMAL(10,2) NOT NULL
+);
+
+---Tabela Pedido---
+CREATE TABLE Pedido (
+id_pedido INT PRIMARY KEY IDENTITY(1,1),
+data_pedido DATE NOT NULL,
+id_cliente INT,
+FOREIGN KEY (id_cliente) REFERENCES Cliente(id_cliente)
+);
+
+---Tabela Item_Pedido---
+CREATE TABLE Item_Pedido (
+id_item INT PRIMARY KEY IDENTITY(1,1),
+id_pedido INT,
+id_produto INT,
+quantidade INT NOT NULL,
+preco_unitario DECIMAL(10,2) NOT NULL,
+FOREIGN KEY (id_pedido) REFERENCES Pedido(id_pedido),
+FOREIGN KEY (id_produto) REFERENCES Produto(id_produto)
+);
