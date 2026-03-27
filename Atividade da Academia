@@ -1,0 +1,69 @@
+CREATE DATABASE Academina_DB;
+USE Academia_DB;
+
+---Tabela do Aluno---
+CREATE TABLE Aluno (
+id_aluno INT PRIMARY KEY IDENTITY(1,1),
+nome VARCHAR(100) NOT NULL,
+cpf VARCHAR(14) UNIQUE NOT NULL,
+data_nascimento DATE NOT NULL
+);
+
+---Tabela do Instrutor---
+CREATE TABLE Instrutor (
+id_instrutor INT PRIMARY KEY IDENTITY(1,1),
+nome VARCHAR(100) NOT NULL,
+id_especialidade VARCHAR(100),
+);
+
+---Tabela do Plano---
+CREATE TABLE Plano (
+id_plano INT PRIMARY KEY IDENTITY(1,1),
+nome VARCHAR(100) NOT NULL,
+valor DECIMAL(10,2)
+);
+
+---Tbaela da Matricula---
+CREATE TABLE Matricula (
+id_matricula INT PRIMARY KEY IDENTITY(1,1),
+id_aluno INT,
+id_plano INT,
+data_inicio DATE,
+status VARCHAR(10),
+FOREIGN KEY (id_aluno) REFERENCES Aluno(id_aluno),
+FOREIGN KEY (id_plano) REFERENCES Plano(id_plano)
+);
+
+---Tabela de Treino---
+CREATE TABLE Treino (
+id_treino INT PRIMARY KEY IDENTITY(1,1),
+id_aluno INT,
+id_instrutor INT,
+tipo_treino VARCHAR(100),
+FOREIGN KEY (id_aluno) REFERENCES Aluno(id_aluno),
+FOREIGN KEY (id_instrutor) REFERENCES Instrutor(id_instrutor)
+);
+
+-- Alunos
+INSERT INTO Aluno (nome, cpf, telefone) VALUES
+('Luis Carlos', '131.382.232-11', '11994299429'),
+('Maria Souza', '253.323.021-42', '11983789888');
+
+-- Planos
+INSERT INTO Plano (nome, valor) VALUES
+('Mensal', 80.00),
+('Anual', 120.00);
+
+-- Instrutor
+INSERT INTO Instrutor (nome, especialidade) VALUES
+('São José', 'Musculação');
+
+-- Matrículas
+INSERT INTO Matricula (id_aluno, id_plano, data_inicio, status) VALUES
+(1, 5, '2026-03-11', 'Ativa'),
+(2, 3, '2026-04-01', 'Ativa');
+
+-- Treinos
+INSERT INTO Treino (tipo, id_aluno, id_instrutor) VALUES
+('Hipertrofia', 1, 1),
+('Emagrecimento', 2, 1);
