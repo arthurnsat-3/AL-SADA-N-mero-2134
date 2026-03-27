@@ -1,0 +1,62 @@
+CREATE DATABASE SASC_db;
+
+USE SASC_db;
+
+CREATE TABLE Usuarios (
+id INT PRIMARY KEY IDENTITY(1,1),
+Nome VARCHAR(50),
+Login VARCHAR(50),
+Senha VARBINARY(MAX),
+Perfil VARCHAR(20)
+);
+
+CREATE TABLE Sensores (
+id INT PRIMARY KEY IDENTITY(1,1),
+NomeSensor VARCHAR(50),
+Tipo VARCHAR(30),
+Localização VARCHAR(50),
+);
+
+CREATE TABLE Leituras (
+id INT PRIMARY KEY IDENTITY(1,1),
+idSensor INT,
+Valor VARBINARY(MAX),
+DataLeitura DATETIME,
+);
+
+CREATE TABLE Equipamentos (
+id INT PRIMARY KEY IDENTITY(1,1),
+NomeEquipamento VARCHAR(50),
+Status VARCHAR(20),
+Localizacao VARCHAR(50),
+);
+
+CREATE LOGIN operador_login WITH PASSWORD = '456!SENHA';
+CREATE LOGIN admin_login WITH PASSWORD = '456!SENHA';
+
+CREATE USER operador FOR LOGIN operador_login;
+CREATE USER admin FOR LOGIN admin_login;
+
+CREATE ROLE operador_role;
+CREATE ROLE admin_role;
+
+--Operador: inserir
+GRANT INSERT ON operador TO operador_role;
+--Admin: tudo
+GRANT CONTROL ON DATABASE::SASC_db TO admin_role;
+
+ALTER ROLE operador_role ADD MEMBER operador;
+ALTER ROLE admin_role ADD MEMBER admin;
+
+EXECUTE AS USER = 'operador';
+SELECT * FROM Sensores;
+REVERT;
+
+EXECUTE AS USER = 'operador';
+INSERT INTO Sensores VALUES ('Sensor332', 'Temperatura', 2314);
+INSERT INTO Sensores VALUES ('Sensor213', 'Som', 1234);
+REVERT;
+
+EXECUTE AS USER = 'admin';
+SELECT * FROM Sensores;
+REVERT;
