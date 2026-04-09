@@ -1,0 +1,12 @@
+def verificar_valor(valor):
+    if valor > 50:
+        return "Resultado da leitura: ALTO"
+    else:
+        return "Valor BAIXO"
+
+def exibir_mensagem(msg):
+    print(msg)
+
+valor = 100
+mensagem = verificar_valor(valor)
+exibir_mensagem(mensagem)  
