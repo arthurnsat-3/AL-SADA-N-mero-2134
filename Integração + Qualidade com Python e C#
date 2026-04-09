@@ -10,3 +10,29 @@ def exibir_mensagem(msg):
 valor = 100
 mensagem = verificar_valor(valor)
 exibir_mensagem(mensagem)  
+
+
+int verde = 8;
+int amarelo = 9;
+int vermelho = 10;
+
+void setup() {
+    pinMode(verde, OUTPUT);
+    pinMode(amarelo, OUTPUT);
+    pinMode(vermelho, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(verde, HIGH);
+    delay(5000);
+
+    digitalWrite(verde, LOW);
+    digitalWrite(amarelo, HIGH);
+    delay(2000);
+
+    digitalWrite(amarelo, LOW);
+    digitalWrite(vermelho, HIGH);
+    delay(5000);
+
+    digitalWrite(vermelho, LOW);
+}
