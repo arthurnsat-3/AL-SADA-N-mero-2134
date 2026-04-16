@@ -1,0 +1,41 @@
+DELIMITER $$
+
+CREATE PROCEDURE classificar_valor()
+BEGIN
+	DECLARE valor INT DEFAULT 25;
+    DECLARE mensagem VARCHAR(20);
+    
+    -- COMPLETE AQUI
+    IF valor < 20 THEN
+		SET mensagem = ' ';
+        
+	ELSEIF valor BETWEEN 20 AND 30 THEN
+		SET mensagem = ' ';
+	
+    ELSE 
+		SET mensagem = ' ';
+	END IF;
+    
+    SELECT mensagem AS classificacao,
+		'Enviando...' AS status1,
+        'OK' AS status2;
+END $$
+
+DELIMITER ;
+
+CALL classificar_valor();
+
+
+
+
+SET @valor = 25;
+
+SELECT
+	CASE
+		WHEN @valor < 20 THEN 'Baixo'
+        WHEN @valor BETWEEN 20 AND 30 THEN 'Normal'
+        ELSE 'Alto'
+	END AS classificacao,
+    
+    'Enviando....' AS status1,
+    'OK' AS status2;
