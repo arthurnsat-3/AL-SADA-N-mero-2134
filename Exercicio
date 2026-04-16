@@ -1,0 +1,63 @@
+-------SISTEMA DO MYSQL-------
+
+
+
+
+CREATE DATABASE escola;
+USE escola;
+CREATE TABLE alunos (
+	id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100),
+    idade INT 
+);
+SELECT * FROM alunos;
+
+
+
+
+-------SISTEMA EM PYTHON-------
+
+from flask import Flask, request, jsonify
+import mysql.connector
+
+app = Flask(__name__)
+
+# Conexão com o banco
+def conectar():
+    return mysql.connector.connect(
+        host="localhsot",
+        user="root",
+        password="SUA_SENHA",
+        database="escola"
+    )
+
+# Rota para inserir aluno
+@app.route('/alunols', methods=['POST'])
+def adicionar_aluno():
+    dados = request.json
+    nome = dados['nome']
+    idade = dados['idade']
+
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    sql = "INSERT INTO alunos (nome, idade) VALUES (%s, %s)"
+    valores = (nome, idade)
+
+    cursor.execute(sql, valores)
+    conexao.commit()
+
+    return jsonify({"mensagem": "Aluno inserido com sucesso"})
+
+# Rota para listar alunos
+@app.route('/alunos', methods=['GET'])
+def listar_alunos():
+    conexao = conectar()
+    cursor = conexao.cursor(dictionary = True)
+
+    cursor.execute("SELECT * FROM alunos")
+    resultados = cursor.fetchall()
+
+    return jsonify(resultados)
+
+app.run(debug=True)
