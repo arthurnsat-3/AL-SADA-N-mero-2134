@@ -1,0 +1,46 @@
+import hashlib
+
+def hash_senha(senha):
+    return hashlib.sha256(senha.encode()).hexdigest()
+
+# ===== DADOS CADASTRADOS =====
+usuario_correto = "Lucas"
+senha_salva = hash_senha("15423")  # senha protegida com hash
+
+# ===== LOGIN =====
+nome = input("Digite o seu nome: ")
+
+if nome != usuario_correto:
+    print("ATENÇÃO: acesso não autorizado")
+    exit()
+
+print("Usuário válido. Prossiga com o login.\n")
+
+# ===== CONTROLE DE TENTATIVAS =====
+tentativas = 3
+
+while tentativas > 0:
+    senha = input("Digite sua senha: ")
+
+    if hash_senha(senha) == senha_salva:
+        print("\nAcesso liberado!")
+        break
+    else:
+        tentativas -= 1
+        print(f"Senha incorreta. Tentativas restantes: {tentativas}")
+
+if tentativas == 0:
+    print("\nAcesso bloqueado.")
+    exit()
+
+# ===== MENU =====
+def menu():
+    print("\n==== SISTEMA DE MONITORAMENTO ====")
+    print("1 - Cadastrar Máquina")
+    print("2 - Cadastrar Sensor")
+    print("3 - Cadastrar Operador")
+    print("4 - Registrar Leituras")
+    print("5 - Listar Máquinas")
+    print("6 - Sair")
+
+menu()
